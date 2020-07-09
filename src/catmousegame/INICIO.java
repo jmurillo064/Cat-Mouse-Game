@@ -7,6 +7,7 @@ package catmousegame;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -24,6 +25,17 @@ public class INICIO extends javax.swing.JFrame {
     ImageIcon iconoRaton1 = new ImageIcon("C:\\Users\\jmuri\\OneDrive\\Documentos\\NetBeansProjects\\CatMouseGame\\src\\imagenes\\animal (1).png"); //icono del gato
     boolean moverMouse = true;
     boolean moverCats = false;
+    int [][] matrizGame = new int[8][8];//matriz de posicion
+    int moverIzDe;
+    String [] opciones = {"Izquierda", "Derecha", "Cancelar"};
+    
+    void llenarMatrizCeros(){
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                matrizGame[i][j]=0;
+            }
+        }
+    }
     
     void elegirMouse(){
         System.out.println("Ingrese un numero: 1-4");
@@ -33,6 +45,7 @@ public class INICIO extends javax.swing.JFrame {
         b8.setIcon(null);
         if (posicionMouse==1) {
             b2.setIcon(iconoMouse);
+            matrizGame[0][1]=1;
 //            b2.setText("X");
         }else if (posicionMouse==2) {
             b4.setIcon(iconoMouse);
@@ -51,11 +64,16 @@ public class INICIO extends javax.swing.JFrame {
         b59.setIcon(iconoRaton1);
         b61.setIcon(iconoRaton1);
         b63.setIcon(iconoRaton1);
+        matrizGame[7][0]=2;
+        matrizGame[7][2]=2;
+        matrizGame[7][4]=2;
+        matrizGame[7][6]=2;
     }
     
     public INICIO() {
         initComponents();
         this.setLocationRelativeTo(null);
+        llenarMatrizCeros();
         elegirMouse();
         llenarCats();
     }
@@ -565,54 +583,73 @@ public class INICIO extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    void falsoMouse(){
+        moverMouse=false;
+        moverCats=true;
+    }
+    
+    void falsoCat(){
+        moverMouse=true;
+        moverCats=false;
+    }
+    
     private void b9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b9ActionPerformed
         //mover mouse
-        if (moverMouse==true) {
-            if (getIconImage()==null) {
-                if (b2.getIcon()==iconoMouse) {
+        if (moverMouse==true && matrizGame[1][0]==0) {
+//            if (getIconImage()==null) {
+            if (matrizGame[0][1]==1) {
+//                if (b2.getIcon()==iconoMouse) {
                     b9.setIcon(iconoMouse);
                     b2.setIcon(null);
-                }
+//                }
+                    matrizGame[1][0]=1;
+                    matrizGame[0][1]=0;
+                    falsoMouse();
             }
-            if (getIconImage()==null) {
-                if (b18.getIcon()==iconoMouse) {
+            if (matrizGame[2][1]==1) {
+//            if (getIconImage()==null) {
+//                if (b18.getIcon()==iconoMouse) {
                     b9.setIcon(iconoMouse);
                     b18.setIcon(null);
-                }
+                    matrizGame[1][0]=1;
+                    matrizGame[2][1]=0;
+                    falsoMouse();
+//                }
             }
-            moverMouse=false;
-            moverCats=true;
         }
-        //Movimiento cats
-        else if (moverCats==true) {
-            if (this.getIconImage()==null) {
-                if (b18.getIcon()==iconoRaton1) {
-                    b9.setIcon(iconoRaton1);
-                    b18.setIcon(null);
-                }
-            }
-            moverCats=false;
-            moverMouse=true;
+        //mover cat
+        if(matrizGame[0][1]==2 && moverCats==true){
+//            moverIzDe=JOptionPane.showOptionDialog(null, "Es necesario que selecciones una opción", "Mover cat", WIDTH, WIDTH, iconoMouse, opciones, opciones[0]);
+//            if (moverIzDe==0) {
+             System.out.println("### No se puede realizar este movimiento ###");
         }
     }//GEN-LAST:event_b9ActionPerformed
 
     private void b2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b2ActionPerformed
         //mover mouse
-        if (moverMouse==true) {
-            if (getIconImage()==null) {
-            if (b9.getIcon()==iconoMouse) {
-                b2.setIcon(iconoMouse);
-                b9.setIcon(null);
+        if (moverMouse==true && matrizGame[0][1]==0) {
+//            if (getIconImage()==null) {
+            if(matrizGame[1][0]==1){
+//                if (b9.getIcon()==iconoMouse) {
+                    b2.setIcon(iconoMouse);
+                    b9.setIcon(null);
+                    matrizGame[1][0]=0;
+                    matrizGame[0][1]=1;
+                    falsoMouse();
+//                }
             }
-            }
-            if (getIconImage()==null) {
-                if (b11.getIcon()==iconoMouse) {
+//            if (getIconImage()==null) {
+            if(matrizGame[1][2]==1){
+//                if (b11.getIcon()==iconoMouse) {
                     b2.setIcon(iconoMouse);
                     b11.setIcon(null);
-                }
+                    matrizGame[1][0]=0;
+                    matrizGame[0][1]=1;
+                    falsoMouse();
+//                }
             }
-            moverMouse=false;
-            moverCats=true;
+//            moverMouse=false;
+//            moverCats=true;
         }//Movimiento cats
         else if (moverCats==true) {
             if (this.getIconImage()==null) {
@@ -634,987 +671,1428 @@ public class INICIO extends javax.swing.JFrame {
 
     private void b4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b4ActionPerformed
         //mover mouse
-        if (moverMouse==true) {    
-            if (getIconImage()==null) {
-                if (b11.getIcon()==iconoMouse) {
+        if (moverMouse==true && matrizGame[0][3]==0) {    
+//            if (getIconImage()==null) {
+//                if (b11.getIcon()==iconoMouse) {
+            if(matrizGame[1][2]==1){
                     b4.setIcon(iconoMouse);
                     b11.setIcon(null);
-                }
+//                }
+                    matrizGame[1][2]=0;
+                    matrizGame[0][3]=1;
+                    falsoMouse();
             }
-            if (getIconImage()==null) {
-                if (b13.getIcon()==iconoMouse) {
+//            if (getIconImage()==null) {
+//                if (b13.getIcon()==iconoMouse) {
+            if(matrizGame[1][4]==1){
                     b4.setIcon(iconoMouse);
                     b13.setIcon(null);
-                }
+//                }
+                    matrizGame[1][4]=0;
+                    matrizGame[0][3]=1;
+                    falsoMouse();
             }
-            moverMouse=false;
-            moverCats=true;
-        }//Movimiento cats
-        else if (moverCats==true) {
-            if (getIconImage()==null) {
-                if (b11.getIcon()==iconoRaton1) {
-                    b4.setIcon(iconoRaton1);
-                    b11.setIcon(null);
-                }
-            } else if (getIconImage()==null) {
-                if (b13.getIcon()==iconoRaton1) {
-                    b4.setIcon(iconoRaton1);
-                    b13.setIcon(null);
-                }
-            }
-            moverCats=false;
-            moverMouse=true;
+//            moverMouse=false;
+//            moverCats=true;
+        }
+        //mover cat
+        if(matrizGame[0][3]==2 && moverCats==true){
+//            moverIzDe=JOptionPane.showOptionDialog(null, "Es necesario que selecciones una opción", "Mover cat", WIDTH, WIDTH, iconoMouse, opciones, opciones[0]);
+//            if (moverIzDe==0) {
+             System.out.println("### No se puede realizar este movimiento ###");
         }
     }//GEN-LAST:event_b4ActionPerformed
 
     private void b6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b6ActionPerformed
         //mover mouse
-        if (moverMouse==true) {    
-            if (getIconImage()==null) {
-                if (b13.getIcon()==iconoMouse) {
+        if (moverMouse==true && matrizGame[0][5]==0) {    
+//            if (getIconImage()==null) {
+//                if (b13.getIcon()==iconoMouse) {
+             if(matrizGame[1][4]==1){
                     b6.setIcon(iconoMouse);
                     b13.setIcon(null);
-                }
+//                }
+                    matrizGame[1][4]=0;
+                    matrizGame[0][5]=1;
+                    falsoMouse();
             }
-            if (getIconImage()==null) {
-                if (b15.getIcon()==iconoMouse) {
+//            if (getIconImage()==null) {
+//                if (b15.getIcon()==iconoMouse) {
+              if(matrizGame[1][6]==1){
                     b6.setIcon(iconoMouse);
                     b15.setIcon(null);
-                }
+//                }
+                    matrizGame[1][6]=0;
+                    matrizGame[0][5]=1;
+                    falsoMouse();
             }
-            moverMouse=false;
-            moverCats=true;
-        }//Movimiento cats
-        else if (moverCats==true) {
-            if (getIconImage()==null) {
-                if (b13.getIcon()==iconoRaton1) {
-                    b6.setIcon(iconoRaton1);
-                    b13.setIcon(null);
-                }
-            } else if (getIconImage()==null) {
-                if (b15.getIcon()==iconoRaton1) {
-                    b6.setIcon(iconoRaton1);
-                    b15.setIcon(null);
-                }
-            }
-            moverCats=false;
-            moverMouse=true;
+//            moverMouse=false;
+//            moverCats=true;
+        }
+        //mover cat
+        if(matrizGame[0][5]==2 && moverCats==true){
+//            moverIzDe=JOptionPane.showOptionDialog(null, "Es necesario que selecciones una opción", "Mover cat", WIDTH, WIDTH, iconoMouse, opciones, opciones[0]);
+//            if (moverIzDe==0) {
+             System.out.println("### No se puede realizar este movimiento ###");
         }
     }//GEN-LAST:event_b6ActionPerformed
 
     private void b8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b8ActionPerformed
         //mover mouse
-        if (moverMouse==true) {    
-            if (getIconImage()==null) {
-                if (b15.getIcon()==iconoMouse) {
+        if (moverMouse==true && matrizGame[0][7]==0) {    
+//            if (getIconImage()==null) {
+//                if (b15.getIcon()==iconoMouse) {
+             if(matrizGame[1][6]==1){
                     b8.setIcon(iconoMouse);
                     b15.setIcon(null);
-                }
+//                }
+                    matrizGame[1][6]=0;
+                    matrizGame[0][7]=1;
+                    falsoMouse();
             }
-            moverMouse=false;
-            moverCats=true;
-        }//Movimiento cats
-        else if (moverCats==true) {
-            if (getIconImage()==null) {
-                if (b15.getIcon()==iconoRaton1) {
-                    b8.setIcon(iconoRaton1);
-                    b15.setIcon(null);
-                }
-            } 
-            moverCats=false;
-            moverMouse=true;
+//            moverMouse=false;
+//            moverCats=true;
+        }
+        //mover cat
+        if(matrizGame[0][7]==2 && moverCats==true){
+//            moverIzDe=JOptionPane.showOptionDialog(null, "Es necesario que selecciones una opción", "Mover cat", WIDTH, WIDTH, iconoMouse, opciones, opciones[0]);
+//            if (moverIzDe==0) {
+             System.out.println("### No se puede realizar este movimiento ###");
         }
     }//GEN-LAST:event_b8ActionPerformed
 
     private void b11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b11ActionPerformed
         //mover mouse
-        if (moverMouse==true) {    
-            if (getIconImage()==null) {
-                if (b2.getIcon()==iconoMouse) {
+        if (moverMouse==true && matrizGame[1][2]==0) {    
+//            if (getIconImage()==null) {
+//                if (b2.getIcon()==iconoMouse) {
+            if(matrizGame[0][1]==1){
                     b11.setIcon(iconoMouse);
                     b2.setIcon(null);
-                }
+//                }
+                    matrizGame[0][1]=0;
+                    matrizGame[1][2]=1;
+                    falsoMouse();
             }
-            if (getIconImage()==null) {
-                if (b4.getIcon()==iconoMouse) {
+//            if (getIconImage()==null) {
+//                if (b4.getIcon()==iconoMouse) {
+            if(matrizGame[0][3]==1){
                     b11.setIcon(iconoMouse);
                     b4.setIcon(null);
-                }
+//                }
+                    matrizGame[0][3]=0;
+                    matrizGame[1][2]=1;
+                    falsoMouse();
             }
-            if (getIconImage()==null) {
-                if (b18.getIcon()==iconoMouse) {
+//            if (getIconImage()==null) {
+//                if (b18.getIcon()==iconoMouse) {
+            if(matrizGame[2][1]==1){
                     b11.setIcon(iconoMouse);
                     b18.setIcon(null);
-                }
+//                }
+                    matrizGame[2][1]=0;
+                    matrizGame[1][2]=1;
+                    falsoMouse();
             }
-            if (getIconImage()==null) {
-                if (b20.getIcon()==iconoMouse) {
+//            if (getIconImage()==null) {
+//                if (b20.getIcon()==iconoMouse) {
+            if(matrizGame[2][3]==1){
                     b11.setIcon(iconoMouse);
                     b20.setIcon(null);
-                }
+//                }
+                    matrizGame[2][3]=0;
+                    matrizGame[1][2]=1;
+                    falsoMouse();
             }
-            moverMouse=false;
-            moverCats=true;
-        }//Movimiento cats
-        else if (moverCats==true) {
-            if (getIconImage()==null) {
-                if (b18.getIcon()==iconoRaton1) {
-                    b11.setIcon(iconoRaton1);
-                    b18.setIcon(null);
+//            moverMouse=false;
+//            moverCats=true;
+        }
+        //mover cat
+        if(matrizGame[1][2]==2 && moverCats==true){
+            moverIzDe=JOptionPane.showOptionDialog(null, "Es necesario que selecciones una opción", "Mover cat", WIDTH, WIDTH, iconoRaton1, opciones, opciones[0]);
+            if (moverIzDe==0) {
+                if (matrizGame[0][1]==0) {
+                    b2.setIcon(iconoRaton1);
+                    b11.setIcon(null);
+                    matrizGame[0][1]=2;
+                    matrizGame[1][2]=0;
+                    falsoCat();
                 }
-            } else if (getIconImage()==null) {
-                if (b20.getIcon()==iconoRaton1) {
-                    b11.setIcon(iconoRaton1);
-                    b20.setIcon(null);
+            }else if (moverIzDe==1) {
+                if (matrizGame[0][3]==0) {
+                    b4.setIcon(iconoRaton1);
+                    b11.setIcon(null);
+                    matrizGame[0][3]=2;
+                    matrizGame[1][2]=0;
+                    falsoCat();
                 }
+            }else if(moverIzDe==2){
+                
             }
-            moverCats=false;
-            moverMouse=true;
         }
     }//GEN-LAST:event_b11ActionPerformed
 
     private void b13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b13ActionPerformed
         //mover mouse
-        if (moverMouse==true) {    
-            if (getIconImage()==null) {
-                if (b4.getIcon()==iconoMouse) {
+        if (moverMouse==true && matrizGame[1][4]==0) {    
+//            if (getIconImage()==null) {
+//                if (b4.getIcon()==iconoMouse) {
+             if(matrizGame[0][3]==1){
                     b13.setIcon(iconoMouse);
                     b4.setIcon(null);
-                }
+//                }
+                    matrizGame[0][3]=0;
+                    matrizGame[1][4]=1;
+                    falsoMouse();
             }
-            if (getIconImage()==null) {
-                if (b6.getIcon()==iconoMouse) {
+//            if (getIconImage()==null) {
+//                if (b6.getIcon()==iconoMouse) {
+              if(matrizGame[0][5]==1){
                     b13.setIcon(iconoMouse);
                     b6.setIcon(null);
-                }
+//                }
+                    matrizGame[0][5]=0;
+                    matrizGame[1][4]=1;
+                    falsoMouse();
             }
-            if (getIconImage()==null) {
-                if (b20.getIcon()==iconoMouse) {
+//            if (getIconImage()==null) {
+//                if (b20.getIcon()==iconoMouse) {
+               if(matrizGame[2][3]==1){
                     b13.setIcon(iconoMouse);
                     b20.setIcon(null);
-                }
+//                }
+                    matrizGame[2][3]=0;
+                    matrizGame[1][4]=1;
+                    falsoMouse();
             }
-            if (getIconImage()==null) {
-                if (b22.getIcon()==iconoMouse) {
+//            if (getIconImage()==null) {
+//                if (b22.getIcon()==iconoMouse) {
+                if(matrizGame[2][5]==1){
                     b13.setIcon(iconoMouse);
                     b22.setIcon(null);
-                }
+//                }
+                    matrizGame[2][5]=0;
+                    matrizGame[1][4]=1;
+                    falsoMouse();
             }
-            moverMouse=false;
-            moverCats=true;
-        }//Movimiento cats
-        else if (moverCats==true) {
-            if (getIconImage()==null) {
-                if (b20.getIcon()==iconoRaton1) {
-                    b13.setIcon(iconoRaton1);
-                    b20.setIcon(null);
+//            moverMouse=false;
+//            moverCats=true;
+        }
+        //mover cat
+        if(matrizGame[1][4]==2 && moverCats==true){
+            moverIzDe=JOptionPane.showOptionDialog(null, "Es necesario que selecciones una opción", "Mover cat", WIDTH, WIDTH, iconoRaton1, opciones, opciones[0]);
+            if (moverIzDe==0) {
+                if (matrizGame[0][3]==0) {
+                    b4.setIcon(iconoRaton1);
+                    b13.setIcon(null);
+                    matrizGame[0][3]=2;
+                    matrizGame[1][4]=0;
+                    falsoCat();
                 }
-            } else if (getIconImage()==null) {
-                if (b22.getIcon()==iconoRaton1) {
-                    b13.setIcon(iconoRaton1);
-                    b22.setIcon(null);
+            }else if (moverIzDe==1) {
+                if (matrizGame[0][5]==0) {
+                    b6.setIcon(iconoRaton1);
+                    b13.setIcon(null);
+                    matrizGame[0][5]=2;
+                    matrizGame[1][4]=0;
+                    falsoCat();
                 }
+            }else if(moverIzDe==2){
+                
             }
-            moverCats=false;
-            moverMouse=true;
         }
     }//GEN-LAST:event_b13ActionPerformed
 
     private void b15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b15ActionPerformed
         //mover mouse
-        if (moverMouse==true) {    
-            if (getIconImage()==null) {
-                if (b6.getIcon()==iconoMouse) {
+        if (moverMouse==true && matrizGame[1][6]==0) {    
+//            if (getIconImage()==null) {
+//                if (b6.getIcon()==iconoMouse) {
+            if(matrizGame[0][5]==1){
                     b15.setIcon(iconoMouse);
                     b6.setIcon(null);
-                }
+//                }
+                    matrizGame[0][5]=0;
+                    matrizGame[1][6]=1;
+                    falsoMouse();
             } 
-            if (getIconImage()==null) {
-                if (b8.getIcon()==iconoMouse) {
+//            if (getIconImage()==null) {
+//                if (b8.getIcon()==iconoMouse) {
+            if(matrizGame[0][7]==1){
                     b15.setIcon(iconoMouse);
                     b8.setIcon(null);
-                }
+//                }
+                    matrizGame[0][7]=0;
+                    matrizGame[1][6]=1;
+                    falsoMouse();
             } 
-            if (getIconImage()==null) {
-                if (b22.getIcon()==iconoMouse) {
+//            if (getIconImage()==null) {
+//                if (b22.getIcon()==iconoMouse) {
+            if(matrizGame[2][5]==1){
                     b15.setIcon(iconoMouse);
                     b22.setIcon(null);
-                }
+//                }
+                    matrizGame[2][5]=0;
+                    matrizGame[1][6]=1;
+                    falsoMouse();
             } 
-            if (getIconImage()==null) {
-                if (b24.getIcon()==iconoMouse) {
+//            if (getIconImage()==null) {
+//                if (b24.getIcon()==iconoMouse) {
+            if(matrizGame[2][7]==1){
                     b15.setIcon(iconoMouse);
                     b24.setIcon(null);
-                }
+//                }
+                    matrizGame[2][7]=0;
+                    matrizGame[1][6]=1;
+                    falsoMouse();
             }
-            moverMouse=false;
-            moverCats=true;
-        }//Movimiento cats
-        else if (moverCats==true) {
-            if (getIconImage()==null) {
-                if (b22.getIcon()==iconoRaton1) {
-                    b15.setIcon(iconoRaton1);
-                    b22.setIcon(null);
+//            moverMouse=false;
+//            moverCats=true;
+        }
+        //mover cat
+        if(matrizGame[1][6]==2 && moverCats==true){
+            moverIzDe=JOptionPane.showOptionDialog(null, "Es necesario que selecciones una opción", "Mover cat", WIDTH, WIDTH, iconoRaton1, opciones, opciones[0]);
+            if (moverIzDe==0) {
+                if (matrizGame[0][5]==0) {
+                    b6.setIcon(iconoRaton1);
+                    b15.setIcon(null);
+                    matrizGame[0][5]=2;
+                    matrizGame[1][6]=0;
+                    falsoCat();
                 }
-            } else if (getIconImage()==null) {
-                if (b24.getIcon()==iconoRaton1) {
-                    b15.setIcon(iconoRaton1);
-                    b24.setIcon(null);
+            }else if (moverIzDe==1) {
+                if (matrizGame[0][7]==0) {
+                    b8.setIcon(iconoRaton1);
+                    b15.setIcon(null);
+                    matrizGame[0][7]=2;
+                    matrizGame[1][6]=0;
+                    falsoCat();
                 }
+            }else if(moverIzDe==2){
+                
             }
-            moverCats=false;
-            moverMouse=true;
         }
     }//GEN-LAST:event_b15ActionPerformed
 
     private void b18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b18ActionPerformed
         //mover mouse
-        if (moverMouse==true) { 
-            if (getIconImage()==null) {
-                if (b9.getIcon()==iconoMouse) {
+        if (moverMouse==true && matrizGame[2][1]==0){ 
+//            if (getIconImage()==null) {
+//                if (b9.getIcon()==iconoMouse) {
+            if(matrizGame[1][0]==1){
                     b18.setIcon(iconoMouse);
                     b9.setIcon(null);
-                }
+//                }
+                    matrizGame[1][0]=0;
+                    matrizGame[2][1]=1;
+                    falsoMouse();
             } 
-            if (getIconImage()==null) {
-                if (b11.getIcon()==iconoMouse) {
+//            if (getIconImage()==null) {
+//                if (b11.getIcon()==iconoMouse) {
+            if(matrizGame[1][2]==1){
                     b18.setIcon(iconoMouse);
                     b11.setIcon(null);
-                }
+//                }
+                    matrizGame[1][2]=0;
+                    matrizGame[2][1]=1;
+                    falsoMouse();
             } 
-            if (getIconImage()==null) {
-                if (b25.getIcon()==iconoMouse) {
+//            if (getIconImage()==null) {
+//                if (b25.getIcon()==iconoMouse) {
+            if(matrizGame[3][0]==1){
                     b18.setIcon(iconoMouse);
                     b25.setIcon(null);
-                }
+//                }
+                    matrizGame[3][0]=0;
+                    matrizGame[2][1]=1;
+                    falsoMouse();
             } 
-            if (getIconImage()==null) {
-                if (b27.getIcon()==iconoMouse) {
+//            if (getIconImage()==null) {
+//                if (b27.getIcon()==iconoMouse) {
+            if(matrizGame[3][2]==1){
                     b18.setIcon(iconoMouse);
                     b27.setIcon(null);
-                }
+//                }
+                    matrizGame[3][2]=0;
+                    matrizGame[2][1]=1;
+                    falsoMouse();
             }
-            moverMouse=false;
-            moverCats=true;
-        }//Movimiento cats
-        else if (moverCats==true) {
-            if (getIconImage()==null) {
-                if (b25.getIcon()==iconoRaton1) {
-                    b18.setIcon(iconoRaton1);
-                    b25.setIcon(null);
+//            moverMouse=false;
+//            moverCats=true;
+        }
+        //mover cat
+        if(matrizGame[2][1]==2 && moverCats==true){
+            moverIzDe=JOptionPane.showOptionDialog(null, "Es necesario que selecciones una opción", "Mover cat", WIDTH, WIDTH, iconoRaton1, opciones, opciones[0]);
+            if (moverIzDe==0) {
+                if (matrizGame[1][0]==0) {
+                    b9.setIcon(iconoRaton1);
+                    b18.setIcon(null);
+                    matrizGame[1][0]=2;
+                    matrizGame[2][1]=0;
+                    falsoCat();
                 }
-            } else if (getIconImage()==null) {
-                if (b27.getIcon()==iconoRaton1) {
-                    b18.setIcon(iconoRaton1);
-                    b27.setIcon(null);
+            }else if (moverIzDe==1) {
+                if (matrizGame[1][2]==0) {
+                    b11.setIcon(iconoRaton1);
+                    b18.setIcon(null);
+                    matrizGame[1][2]=2;
+                    matrizGame[2][1]=0;
+                    falsoCat();
                 }
+            }else if(moverIzDe==2){
+                
             }
-            moverCats=false;
-            moverMouse=true;
         }
     }//GEN-LAST:event_b18ActionPerformed
 
     private void b20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b20ActionPerformed
         //mover mouse
-        if (moverMouse==true) { 
-            if (getIconImage()==null) {
-                if (b11.getIcon()==iconoMouse) {
+        if (moverMouse==true && matrizGame[2][3]==0) { 
+//            if (getIconImage()==null) {
+//                if (b11.getIcon()==iconoMouse) {
+            if(matrizGame[1][2]==1){
                     b20.setIcon(iconoMouse);
                     b11.setIcon(null);
-                }
+//                }
+                    matrizGame[1][2]=0;
+                    matrizGame[2][3]=1;
+                    falsoMouse();
             } 
-            if (getIconImage()==null) {
-                if (b13.getIcon()==iconoMouse) {
+//            if (getIconImage()==null) {
+//                if (b13.getIcon()==iconoMouse) {
+            if(matrizGame[1][4]==1){
                     b20.setIcon(iconoMouse);
                     b13.setIcon(null);
-                }
+//                }
+                    matrizGame[1][4]=0;
+                    matrizGame[2][3]=1;
+                    falsoMouse();
             } 
-            if (getIconImage()==null) {
-                if (b27.getIcon()==iconoMouse) {
+//            if (getIconImage()==null) {
+//                if (b27.getIcon()==iconoMouse) {
+            if(matrizGame[3][2]==1){
                     b20.setIcon(iconoMouse);
                     b27.setIcon(null);
-                }
+//                }
+                    matrizGame[3][2]=0;
+                    matrizGame[2][3]=1;
+                    falsoMouse();
             } 
-            if (getIconImage()==null) {
-                if (b29.getIcon()==iconoMouse) {
+//            if (getIconImage()==null) {
+//                if (b29.getIcon()==iconoMouse) {
+            if(matrizGame[3][4]==1){
                     b20.setIcon(iconoMouse);
                     b29.setIcon(null);
-                }
+//                }
+                    matrizGame[3][4]=0;
+                    matrizGame[2][3]=1;
+                    falsoMouse();
             }
-            moverMouse=false;
-            moverCats=true;
-        }//Movimiento cats
-        else if (moverCats==true) {
-            if (getIconImage()==null) {
-                if (b27.getIcon()==iconoRaton1) {
-                    b20.setIcon(iconoRaton1);
-                    b27.setIcon(null);
+//            moverMouse=false;
+//            moverCats=true;
+        }
+        //mover cat
+        if(matrizGame[2][3]==2 && moverCats==true){
+            moverIzDe=JOptionPane.showOptionDialog(null, "Es necesario que selecciones una opción", "Mover cat", WIDTH, WIDTH, iconoRaton1, opciones, opciones[0]);
+            if (moverIzDe==0) {
+                if (matrizGame[1][2]==0) {
+                    b11.setIcon(iconoRaton1);
+                    b20.setIcon(null);
+                    matrizGame[1][2]=2;
+                    matrizGame[2][3]=0;
+                    falsoCat();
                 }
-            } else if (getIconImage()==null) {
-                if (b29.getIcon()==iconoRaton1) {
-                    b20.setIcon(iconoRaton1);
-                    b29.setIcon(null);
+            }else if (moverIzDe==1) {
+                if (matrizGame[1][4]==0) {
+                    b13.setIcon(iconoRaton1);
+                    b20.setIcon(null);
+                    matrizGame[1][4]=2;
+                    matrizGame[2][3]=0;
+                    falsoCat();
                 }
+            }else if(moverIzDe==2){
+                
             }
-            moverCats=false;
-            moverMouse=true;
         }
     }//GEN-LAST:event_b20ActionPerformed
 
     private void b22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b22ActionPerformed
         //mover mouse
-        if (moverMouse==true) { 
-            if (getIconImage()==null) {
-                if (b13.getIcon()==iconoMouse) {
+        if (moverMouse==true && matrizGame[2][5]==0) { 
+//            if (getIconImage()==null) {
+//                if (b13.getIcon()==iconoMouse) {
+            if(matrizGame[1][4]==1){
                     b22.setIcon(iconoMouse);
                     b13.setIcon(null);
-                }
+//                }
+                    matrizGame[1][4]=0;
+                    matrizGame[2][5]=1;
+                    falsoMouse();
             } 
-            if (getIconImage()==null) {
-                if (b15.getIcon()==iconoMouse) {
+//            if (getIconImage()==null) {
+//                if (b15.getIcon()==iconoMouse) {
+            if(matrizGame[1][6]==1){
                     b22.setIcon(iconoMouse);
                     b15.setIcon(null);
-                }
+//                }
+                    matrizGame[1][6]=0;
+                    matrizGame[2][5]=1;
+                    falsoMouse();
             } 
-            if (getIconImage()==null) {
-                if (b29.getIcon()==iconoMouse) {
+//            if (getIconImage()==null) {
+//                if (b29.getIcon()==iconoMouse) {
+            if(matrizGame[3][4]==1){
                     b22.setIcon(iconoMouse);
                     b29.setIcon(null);
-                }
+//                }
+                    matrizGame[3][4]=0;
+                    matrizGame[2][5]=1;
+                    falsoMouse();
             } 
-            if (getIconImage()==null) {
-                if (b31.getIcon()==iconoMouse) {
+//            if (getIconImage()==null) {
+//                if (b31.getIcon()==iconoMouse) {
+            if(matrizGame[3][6]==1){
                     b22.setIcon(iconoMouse);
                     b31.setIcon(null);
-                }
+//                }
+                    matrizGame[3][6]=0;
+                    matrizGame[2][5]=1;
+                    falsoMouse();
             }
-            moverMouse=false;
-            moverCats=true;
-        }//Movimiento cats
-        else if (moverCats==true) {
-            if (getIconImage()==null) {
-                if (b29.getIcon()==iconoRaton1) {
-                    b22.setIcon(iconoRaton1);
-                    b29.setIcon(null);
+//            moverMouse=false;
+//            moverCats=true;
+        }
+        //mover cat
+        if(matrizGame[2][5]==2 && moverCats==true){
+            moverIzDe=JOptionPane.showOptionDialog(null, "Es necesario que selecciones una opción", "Mover cat", WIDTH, WIDTH, iconoRaton1, opciones, opciones[0]);
+            if (moverIzDe==0) {
+                if (matrizGame[1][4]==0) {
+                    b13.setIcon(iconoRaton1);
+                    b22.setIcon(null);
+                    matrizGame[1][4]=2;
+                    matrizGame[2][5]=0;
+                    falsoCat();
                 }
-            } else if (getIconImage()==null) {
-                if (b31.getIcon()==iconoRaton1) {
-                    b22.setIcon(iconoRaton1);
-                    b31.setIcon(null);
+            }else if (moverIzDe==1) {
+                if (matrizGame[1][6]==0) {
+                    b15.setIcon(iconoRaton1);
+                    b22.setIcon(null);
+                    matrizGame[1][6]=2;
+                    matrizGame[2][5]=0;
+                    falsoCat();
                 }
+            }else if(moverIzDe==2){
+                
             }
-            moverCats=false;
-            moverMouse=true;
         }
     }//GEN-LAST:event_b22ActionPerformed
 
     private void b24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b24ActionPerformed
         //mover mouse
-        if (moverMouse==true) { 
-            if (getIconImage()==null) {
-                if (b15.getIcon()==iconoMouse) {
+        if (moverMouse==true && matrizGame[2][7]==0) { 
+//            if (getIconImage()==null) {
+//                if (b15.getIcon()==iconoMouse) {
+            if(matrizGame[1][6]==1){
                     b24.setIcon(iconoMouse);
                     b15.setIcon(null);
-                }
+//                }
+                    matrizGame[1][6]=0;
+                    matrizGame[2][7]=1;
+                    falsoMouse();
             } 
-            if (getIconImage()==null) {
-                if (b31.getIcon()==iconoMouse) {
+//            if (getIconImage()==null) {
+//                if (b31.getIcon()==iconoMouse) {
+            if(matrizGame[3][6]==1){
                     b24.setIcon(iconoMouse);
                     b31.setIcon(null);
-                }
+//                }
+                    matrizGame[3][6]=0;
+                    matrizGame[2][7]=1;
+                    falsoMouse();
             }
-            moverMouse=false;
-            moverCats=true;
-        }//Movimiento cats
-        else if (moverCats==true) {
-            if (getIconImage()==null) {
-                if (b57.getIcon()==iconoRaton1) {
-                    b31.setIcon(iconoRaton1);
-                    b57.setIcon(null);
+//            moverMouse=false;
+//            moverCats=true;
+        }
+        //mover cat
+        if(matrizGame[2][7]==2 && moverCats==true){
+//            moverIzDe=JOptionPane.showOptionDialog(null, "Es necesario que selecciones una opción", "Mover cat", WIDTH, WIDTH, iconoMouse, opciones, opciones[0]);
+//            if (moverIzDe==0) {
+                if (matrizGame[1][6]==0) {
+                    b15.setIcon(iconoRaton1);
+                    b24.setIcon(null);
+                    matrizGame[1][6]=2;
+                    matrizGame[2][7]=0;
+                    falsoCat();
+//                }
+                }else if(moverIzDe==2){
+
                 }
-            } 
-            moverCats=false;
-            moverMouse=true;
         }
     }//GEN-LAST:event_b24ActionPerformed
 
     private void b25ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b25ActionPerformed
         //mover mouse
-        if (moverMouse==true) { 
-            if (getIconImage()==null) {
-                if (b18.getIcon()==iconoMouse) {
+        if (moverMouse==true && matrizGame[3][0]==0) { 
+//            if (getIconImage()==null) {
+//                if (b18.getIcon()==iconoMouse) {
+                if(matrizGame[2][1]==1){
                     b25.setIcon(iconoMouse);
                     b18.setIcon(null);
-                }
+//                }
+                    matrizGame[2][1]=0;
+                    matrizGame[3][0]=1;
+                    falsoMouse();
             } 
-            if (getIconImage()==null) {
-                if (b34.getIcon()==iconoMouse) {
+//            if (getIconImage()==null) {
+//                if (b34.getIcon()==iconoMouse) {
+                if(matrizGame[4][1]==1){
                     b25.setIcon(iconoMouse);
                     b34.setIcon(null);
-                }
+//                }
+                    matrizGame[4][1]=0;
+                    matrizGame[3][0]=1;
+                    falsoMouse();
             }
-            moverMouse=false;
-            moverCats=true;
-        }//Movimiento cats
-        else if (moverCats==true) {
-            if (getIconImage()==null) {
-                if (b34.getIcon()==iconoRaton1) {
-                    b25.setIcon(iconoRaton1);
-                    b34.setIcon(null);
+//            moverMouse=false;
+//            moverCats=true;
+        }
+        //mover cat
+        if(matrizGame[3][0]==2 && moverCats==true){
+//            moverIzDe=JOptionPane.showOptionDialog(null, "Es necesario que selecciones una opción", "Mover cat", WIDTH, WIDTH, iconoMouse, opciones, opciones[0]);
+//            if (moverIzDe==0) {
+                if (matrizGame[2][1]==0) {
+                    b18.setIcon(iconoRaton1);
+                    b25.setIcon(null);
+                    matrizGame[2][1]=2;
+                    matrizGame[3][0]=0;
+                    falsoCat();
+//                }
+                }else if(moverIzDe==2){
+
                 }
-            } 
-            moverCats=false;
-            moverMouse=true;
         }
     }//GEN-LAST:event_b25ActionPerformed
 
     private void b27ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b27ActionPerformed
         //mover mouse
-        if (moverMouse==true) {
-            if (getIconImage()==null) {
-                if (b18.getIcon()==iconoMouse) {
+        if (moverMouse==true && matrizGame[3][2]==0) {
+//            if (getIconImage()==null) {
+//                if (b18.getIcon()==iconoMouse) {
+            if(matrizGame[2][1]==1){
                     b27.setIcon(iconoMouse);
                     b18.setIcon(null);
-                }
+//                }
+                    matrizGame[2][1]=0;
+                    matrizGame[3][2]=1;
+                    falsoMouse();
             } 
-            if (getIconImage()==null) {
-                if (b20.getIcon()==iconoMouse) {
+//            if (getIconImage()==null) {
+//                if (b20.getIcon()==iconoMouse) {
+            if(matrizGame[2][3]==1){
                     b27.setIcon(iconoMouse);
                     b20.setIcon(null);
-                }
+//                }
+                    matrizGame[2][3]=0;
+                    matrizGame[3][2]=1;
+                    falsoMouse();
             } 
-            if (getIconImage()==null) {
-                if (b34.getIcon()==iconoMouse) {
+//            if (getIconImage()==null) {
+//                if (b34.getIcon()==iconoMouse) {
+            if(matrizGame[4][1]==1){
                     b27.setIcon(iconoMouse);
                     b34.setIcon(null);
-                }
+//                }
+                    matrizGame[4][1]=0;
+                    matrizGame[3][2]=1;
+                    falsoMouse();
             } 
-            if (getIconImage()==null) {
-                if (b36.getIcon()==iconoMouse) {
+//            if (getIconImage()==null) {
+//                if (b36.getIcon()==iconoMouse) {
+            if(matrizGame[4][3]==1){
                     b27.setIcon(iconoMouse);
                     b36.setIcon(null);
-                }
+//                }
+                    matrizGame[4][3]=0;
+                    matrizGame[3][2]=1;
+                    falsoMouse();
             }
-            moverMouse=false;
-            moverCats=true;
-        }//Movimiento cats
-        else if (moverCats==true) {
-            if (getIconImage()==null) {
-                if (b34.getIcon()==iconoRaton1) {
-                    b27.setIcon(iconoRaton1);
-                    b34.setIcon(null);
+//            moverMouse=false;
+//            moverCats=true;
+        }
+        //mover cat
+        if(matrizGame[3][2]==2 && moverCats==true){
+            moverIzDe=JOptionPane.showOptionDialog(null, "Es necesario que selecciones una opción", "Mover cat", WIDTH, WIDTH, iconoRaton1, opciones, opciones[0]);
+            if (moverIzDe==0) {
+                if (matrizGame[2][1]==0) {
+                    b18.setIcon(iconoRaton1);
+                    b27.setIcon(null);
+                    matrizGame[2][1]=2;
+                    matrizGame[3][2]=0;
+                    falsoCat();
                 }
-            } else if (getIconImage()==null) {
-                if (b36.getIcon()==iconoRaton1) {
-                    b27.setIcon(iconoRaton1);
-                    b36.setIcon(null);
+            }else if (moverIzDe==1) {
+                if (matrizGame[2][3]==0) {
+                    b20.setIcon(iconoRaton1);
+                    b27.setIcon(null);
+                    matrizGame[2][3]=2;
+                    matrizGame[3][2]=0;
+                    falsoCat();
                 }
+            }else if(moverIzDe==2){
+                
             }
-            moverCats=false;
-            moverMouse=true;
         }
     }//GEN-LAST:event_b27ActionPerformed
 
     private void b29ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b29ActionPerformed
         //mover mouse
-        if (moverMouse==true) {
-            if (getIconImage()==null) {
-                if (b20.getIcon()==iconoMouse) {
+        if (moverMouse==true && matrizGame[3][4]==0) {
+//            if (getIconImage()==null) {
+//                if (b20.getIcon()==iconoMouse) {
+            if(matrizGame[2][3]==1){
                     b29.setIcon(iconoMouse);
                     b20.setIcon(null);
-                }
+//                }
+                    matrizGame[2][3]=0;
+                    matrizGame[3][4]=1;
+                    falsoMouse();
             } 
-            if (getIconImage()==null) {
-                if (b22.getIcon()==iconoMouse) {
+//            if (getIconImage()==null) {
+//                if (b22.getIcon()==iconoMouse) {
+            if(matrizGame[2][5]==1){
                     b29.setIcon(iconoMouse);
                     b22.setIcon(null);
-                }
+//                }
+                    matrizGame[2][5]=0;
+                    matrizGame[3][4]=1;
+                    falsoMouse();
             } 
-            if (getIconImage()==null) {
-                if (b36.getIcon()==iconoMouse) {
+//            if (getIconImage()==null) {
+//                if (b36.getIcon()==iconoMouse) {
+            if(matrizGame[4][3]==1){
                     b29.setIcon(iconoMouse);
                     b36.setIcon(null);
-                }
+//                }
+                    matrizGame[4][3]=0;
+                    matrizGame[3][4]=1;
+                    falsoMouse();
             } 
-            if (getIconImage()==null) {
-                if (b38.getIcon()==iconoMouse) {
+//            if (getIconImage()==null) {
+//                if (b38.getIcon()==iconoMouse) {
+            if(matrizGame[4][5]==1){
                     b29.setIcon(iconoMouse);
                     b38.setIcon(null);
-                }
+//                }
+                    matrizGame[4][5]=0;
+                    matrizGame[3][4]=1;
+                    falsoMouse();
             }
-            moverMouse=false;
-            moverCats=true;
-        }//Movimiento cats
-        else if (moverCats==true) {
-            if (getIconImage()==null) {
-                if (b36.getIcon()==iconoRaton1) {
-                    b29.setIcon(iconoRaton1);
-                    b36.setIcon(null);
+//            moverMouse=false;
+//            moverCats=true;
+        }
+        //mover cat
+        if(matrizGame[3][4]==2 && moverCats==true){
+            moverIzDe=JOptionPane.showOptionDialog(null, "Es necesario que selecciones una opción", "Mover cat", WIDTH, WIDTH, iconoRaton1, opciones, opciones[0]);
+            if (moverIzDe==0) {
+                if (matrizGame[2][3]==0) {
+                    b20.setIcon(iconoRaton1);
+                    b29.setIcon(null);
+                    matrizGame[2][3]=2;
+                    matrizGame[3][4]=0;
+                    falsoCat();
                 }
-            } else if (getIconImage()==null) {
-                if (b38.getIcon()==iconoRaton1) {
-                    b29.setIcon(iconoRaton1);
-                    b38.setIcon(null);
+            }else if (moverIzDe==1) {
+                if (matrizGame[2][5]==0) {
+                    b22.setIcon(iconoRaton1);
+                    b29.setIcon(null);
+                    matrizGame[2][5]=2;
+                    matrizGame[3][4]=0;
+                    falsoCat();
                 }
+            }else if(moverIzDe==2){
+                
             }
-            moverCats=false;
-            moverMouse=true;
         }
     }//GEN-LAST:event_b29ActionPerformed
 
     private void b31ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b31ActionPerformed
         //mover mouse
-        if (moverMouse==true) {
-            if (getIconImage()==null) {
-                if (b22.getIcon()==iconoMouse) {
+        if (moverMouse==true && matrizGame[3][6]==0) {
+//            if (getIconImage()==null) {
+//                if (b22.getIcon()==iconoMouse) {
+            if(matrizGame[2][5]==1){
                     b31.setIcon(iconoMouse);
                     b22.setIcon(null);
-                }
+//                }
+                    matrizGame[2][5]=0;
+                    matrizGame[3][6]=1;
+                    falsoMouse();
             } 
-            if (getIconImage()==null) {
-                if (b24.getIcon()==iconoMouse) {
+//            if (getIconImage()==null) {
+//                if (b24.getIcon()==iconoMouse) {
+            if(matrizGame[2][7]==1){
                     b31.setIcon(iconoMouse);
                     b24.setIcon(null);
-                }
+//                }
+                    matrizGame[2][7]=0;
+                    matrizGame[3][6]=1;
+                    falsoMouse();
             } 
-            if (getIconImage()==null) {
-                if (b38.getIcon()==iconoMouse) {
+//            if (getIconImage()==null) {
+//                if (b38.getIcon()==iconoMouse) {
+            if(matrizGame[4][5]==1){
                     b31.setIcon(iconoMouse);
                     b38.setIcon(null);
-                }
+//                }
+                    matrizGame[4][5]=0;
+                    matrizGame[3][6]=1;
+                    falsoMouse();
             } 
-            if (getIconImage()==null) {
-                if (b40.getIcon()==iconoMouse) {
+//            if (getIconImage()==null) {
+//                if (b40.getIcon()==iconoMouse) {
+            if(matrizGame[4][7]==1){
                     b31.setIcon(iconoMouse);
                     b40.setIcon(null);
-                }
+//                }
+                    matrizGame[4][7]=0;
+                    matrizGame[3][6]=1;
+                    falsoMouse();
             }
-            moverMouse=false;
-            moverCats=true;
-        }//Movimiento cats
-        else if (moverCats==true) {
-            if (getIconImage()==null) {
-                if (b38.getIcon()==iconoRaton1) {
-                    b31.setIcon(iconoRaton1);
-                    b38.setIcon(null);
+//            moverMouse=false;
+//            moverCats=true;
+        }
+        //mover cat
+        if(matrizGame[3][6]==2 && moverCats==true){
+            moverIzDe=JOptionPane.showOptionDialog(null, "Es necesario que selecciones una opción", "Mover cat", WIDTH, WIDTH, iconoRaton1, opciones, opciones[0]);
+            if (moverIzDe==0) {
+                if (matrizGame[2][5]==0) {
+                    b22.setIcon(iconoRaton1);
+                    b31.setIcon(null);
+                    matrizGame[2][5]=2;
+                    matrizGame[3][6]=0;
+                    falsoCat();
                 }
-            } else if (getIconImage()==null) {
-                if (b40.getIcon()==iconoRaton1) {
-                    b31.setIcon(iconoRaton1);
-                    b40.setIcon(null);
+            }else if (moverIzDe==1) {
+                if (matrizGame[2][7]==0) {
+                    b24.setIcon(iconoRaton1);
+                    b31.setIcon(null);
+                    matrizGame[2][7]=2;
+                    matrizGame[3][6]=0;
+                    falsoCat();
                 }
+            }else if(moverIzDe==2){
+                
             }
-            moverCats=false;
-            moverMouse=true;
         }
     }//GEN-LAST:event_b31ActionPerformed
 
     private void b34ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b34ActionPerformed
         //mover mouse
-        if (moverMouse==true) {
-            if (getIconImage()==null) {
-                if (b25.getIcon()==iconoMouse) {
+        if (moverMouse==true && matrizGame[4][1]==0) {
+//            if (getIconImage()==null) {
+//                if (b25.getIcon()==iconoMouse) {
+            if(matrizGame[3][0]==1){
                     b34.setIcon(iconoMouse);
                     b25.setIcon(null);
-                }
+//                }
+                    matrizGame[3][0]=0;
+                    matrizGame[4][1]=1;
+                    falsoMouse();
             } 
-            if (getIconImage()==null) {
-                if (b27.getIcon()==iconoMouse) {
+//            if (getIconImage()==null) {
+//                if (b27.getIcon()==iconoMouse) {
+            if(matrizGame[3][2]==1){
                     b34.setIcon(iconoMouse);
                     b27.setIcon(null);
-                }
+//                }
+                    matrizGame[3][2]=0;
+                    matrizGame[4][1]=1;
+                    falsoMouse();
             } 
-            if (getIconImage()==null) {
-                if (b41.getIcon()==iconoMouse) {
+//            if (getIconImage()==null) {
+//                if (b41.getIcon()==iconoMouse) {
+            if(matrizGame[5][0]==1){
                     b34.setIcon(iconoMouse);
                     b41.setIcon(null);
-                }
+//                }
+                    matrizGame[5][0]=0;
+                    matrizGame[4][1]=1;
+                    falsoMouse();
             } 
-            if (getIconImage()==null) {
-                if (b43.getIcon()==iconoMouse) {
+//            if (getIconImage()==null) {
+//                if (b43.getIcon()==iconoMouse) {
+            if(matrizGame[5][2]==1){
                     b34.setIcon(iconoMouse);
                     b43.setIcon(null);
-                }
+//                }
+                    matrizGame[5][2]=0;
+                    matrizGame[4][1]=1;
+                    falsoMouse();
             }
-            moverMouse=false;
-            moverCats=true;
-        }//Movimiento cats
-        else if (moverCats==true) {
-            if (getIconImage()==null) {
-                if (b41.getIcon()==iconoRaton1) {
-                    b34.setIcon(iconoRaton1);
-                    b41.setIcon(null);
+//            moverMouse=false;
+//            moverCats=true;
+        }
+        //mover cat
+        if(matrizGame[4][1]==2 && moverCats==true){
+            moverIzDe=JOptionPane.showOptionDialog(null, "Es necesario que selecciones una opción", "Mover cat", WIDTH, WIDTH, iconoRaton1, opciones, opciones[0]);
+            if (moverIzDe==0) {
+                if (matrizGame[3][0]==0) {
+                    b25.setIcon(iconoRaton1);
+                    b34.setIcon(null);
+                    matrizGame[3][0]=2;
+                    matrizGame[4][1]=0;
+                    falsoCat();
                 }
-            } else if (getIconImage()==null) {
-                if (b43.getIcon()==iconoRaton1) {
-                    b34.setIcon(iconoRaton1);
-                    b43.setIcon(null);
+            }else if (moverIzDe==1) {
+                if (matrizGame[3][2]==0) {
+                    b27.setIcon(iconoRaton1);
+                    b34.setIcon(null);
+                    matrizGame[3][2]=2;
+                    matrizGame[4][1]=0;
+                    falsoCat();
                 }
+            }else if(moverIzDe==2){
+                
             }
-            moverCats=false;
-            moverMouse=true;
         }
     }//GEN-LAST:event_b34ActionPerformed
 
     private void b36ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b36ActionPerformed
         //mover mouse
-        if (moverMouse==true) {
-            if (getIconImage()==null) {
-                if (b27.getIcon()==iconoMouse) {
+        if (moverMouse==true && matrizGame[4][3]==0) {
+//            if (getIconImage()==null) {
+            if(matrizGame[3][2]==1){
+//                if (b27.getIcon()==iconoMouse) {
                     b36.setIcon(iconoMouse);
                     b27.setIcon(null);
-                }
+//                }
+                    matrizGame[3][2]=0;
+                    matrizGame[4][3]=1;
+                    falsoMouse();
             } 
-            if (getIconImage()==null) {
-                if (b29.getIcon()==iconoMouse) {
+//            if (getIconImage()==null) {
+//                if (b29.getIcon()==iconoMouse) {
+            if(matrizGame[3][4]==1){
                     b36.setIcon(iconoMouse);
                     b29.setIcon(null);
-                }
+//                }
+                    matrizGame[3][4]=0;
+                    matrizGame[4][3]=1;
+                    falsoMouse();
             } 
-            if (getIconImage()==null) {
-                if (b43.getIcon()==iconoMouse) {
+//            if (getIconImage()==null) {
+//                if (b43.getIcon()==iconoMouse) {
+            if(matrizGame[5][2]==1){
                     b36.setIcon(iconoMouse);
                     b43.setIcon(null);
-                }
+//                }
+                    matrizGame[5][2]=0;
+                    matrizGame[4][3]=1;
+                    falsoMouse();
             } 
-            if (getIconImage()==null) {
-                if (b45.getIcon()==iconoMouse) {
+//            if (getIconImage()==null) {
+//                if (b45.getIcon()==iconoMouse) {
+            if(matrizGame[5][4]==1){
                     b36.setIcon(iconoMouse);
                     b45.setIcon(null);
-                }
+//                }
+                    matrizGame[5][4]=0;
+                    matrizGame[4][3]=1;
+                    falsoMouse();
             }
-            moverMouse=false;
-            moverCats=true;
-        }//Movimiento cats
-        else if (moverCats==true) {
-            if (getIconImage()==null) {
-                if (b43.getIcon()==iconoRaton1) {
-                    b36.setIcon(iconoRaton1);
-                    b43.setIcon(null);
+//            moverMouse=false;
+//            moverCats=true;
+        }
+        //mover cat
+        if(matrizGame[4][3]==2 && moverCats==true){
+            moverIzDe=JOptionPane.showOptionDialog(null, "Es necesario que selecciones una opción", "Mover cat", WIDTH, WIDTH, iconoRaton1, opciones, opciones[0]);
+            if (moverIzDe==0) {
+                if (matrizGame[3][2]==0) {
+                    b27.setIcon(iconoRaton1);
+                    b36.setIcon(null);
+                    matrizGame[3][2]=2;
+                    matrizGame[4][3]=0;
+                    falsoCat();
                 }
-            } else if (getIconImage()==null) {
-                if (b45.getIcon()==iconoRaton1) {
-                    b36.setIcon(iconoRaton1);
-                    b45.setIcon(null);
+            }else if (moverIzDe==1) {
+                if (matrizGame[3][4]==0) {
+                    b29.setIcon(iconoRaton1);
+                    b36.setIcon(null);
+                    matrizGame[3][4]=2;
+                    matrizGame[4][3]=0;
+                    falsoCat();
                 }
+            }else if(moverIzDe==2){
+                
             }
-            moverCats=false;
-            moverMouse=true;
         }
     }//GEN-LAST:event_b36ActionPerformed
 
     private void b38ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b38ActionPerformed
         //mover mouse
-        if (moverMouse==true) {
-            if (getIconImage()==null) {
-                if (b29.getIcon()==iconoMouse) {
+        if (moverMouse==true && matrizGame[4][5]==0) {
+//            if (getIconImage()==null) {
+//                if (b29.getIcon()==iconoMouse) {
+            if(matrizGame[3][4]==1){
                     b38.setIcon(iconoMouse);
                     b29.setIcon(null);
-                }
+//                }
+                    matrizGame[3][4]=0;
+                    matrizGame[4][5]=1;
+                    falsoMouse();
             } 
-            if (getIconImage()==null) {
-                if (b31.getIcon()==iconoMouse) {
+//            if (getIconImage()==null) {
+//                if (b31.getIcon()==iconoMouse) {
+            if(matrizGame[3][6]==1){
                     b38.setIcon(iconoMouse);
                     b31.setIcon(null);
-                }
+//                }
+                    matrizGame[3][6]=0;
+                    matrizGame[4][5]=1;
+                    falsoMouse();
             } 
-            if (getIconImage()==null) {
-                if (b45.getIcon()==iconoMouse) {
+//            if (getIconImage()==null) {
+//                if (b45.getIcon()==iconoMouse) {
+            if(matrizGame[5][4]==1){
                     b38.setIcon(iconoMouse);
                     b45.setIcon(null);
-                }
+//                }
+                    matrizGame[5][4]=0;
+                    matrizGame[4][5]=1;
+                    falsoMouse();
             } 
-            if (getIconImage()==null) {
-                if (b47.getIcon()==iconoMouse) {
+//            if (getIconImage()==null) {
+//                if (b47.getIcon()==iconoMouse) {
+            if(matrizGame[5][6]==1){
                     b38.setIcon(iconoMouse);
                     b47.setIcon(null);
-                }
+//                }
+                    matrizGame[5][6]=0;
+                    matrizGame[4][5]=1;
+                    falsoMouse();
             }
-            moverMouse=false;
-            moverCats=true;
-        }//Movimiento cats
-        else if (moverCats==true) {
-            if (getIconImage()==null) {
-                if (b45.getIcon()==iconoRaton1) {
-                    b38.setIcon(iconoRaton1);
-                    b45.setIcon(null);
+//            moverMouse=false;
+//            moverCats=true;
+        }
+        //mover cat
+        if(matrizGame[4][5]==2 && moverCats==true){
+            moverIzDe=JOptionPane.showOptionDialog(null, "Es necesario que selecciones una opción", "Mover cat", WIDTH, WIDTH, iconoRaton1, opciones, opciones[0]);
+            if (moverIzDe==0) {
+                if (matrizGame[3][4]==0) {
+                    b29.setIcon(iconoRaton1);
+                    b38.setIcon(null);
+                    matrizGame[3][4]=2;
+                    matrizGame[4][5]=0;
+                    falsoCat();
                 }
-            } else if (getIconImage()==null) {
-                if (b47.getIcon()==iconoRaton1) {
-                    b38.setIcon(iconoRaton1);
-                    b47.setIcon(null);
+            }else if (moverIzDe==1) {
+                if (matrizGame[3][6]==0) {
+                    b31.setIcon(iconoRaton1);
+                    b38.setIcon(null);
+                    matrizGame[3][6]=2;
+                    matrizGame[4][5]=0;
+                    falsoCat();
                 }
+            }else if(moverIzDe==2){
+                
             }
-            moverCats=false;
-            moverMouse=true;
         }
     }//GEN-LAST:event_b38ActionPerformed
 
     private void b40ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b40ActionPerformed
        //mover mouse
-        if (moverMouse==true) {
-            if (getIconImage()==null) {
-                if (b31.getIcon()==iconoMouse) {
+        if (moverMouse==true && matrizGame[4][7]==0) {
+//            if (getIconImage()==null) {
+//                if (b31.getIcon()==iconoMouse) {
+            if(matrizGame[3][6]==1){
                     b40.setIcon(iconoMouse);
                     b31.setIcon(null);
-                }
+//                }
+                    matrizGame[3][6]=0;
+                    matrizGame[4][7]=1;
+                    falsoMouse();
             } 
-            if (getIconImage()==null) {
-                if (b47.getIcon()==iconoMouse) {
+//            if (getIconImage()==null) {
+//                if (b47.getIcon()==iconoMouse) {
+            if(matrizGame[5][6]==1){
                     b40.setIcon(iconoMouse);
                     b47.setIcon(null);
-                }
+//                }
+                    matrizGame[5][6]=0;
+                    matrizGame[4][7]=1;
+                    falsoMouse();
             }
-            moverMouse=false;
-            moverCats=true;
-        }//Movimiento cats
-        else if (moverCats==true) {
-            if (getIconImage()==null) {
-                if (b47.getIcon()==iconoRaton1) {
-                    b40.setIcon(iconoRaton1);
-                    b47.setIcon(null);
+//            moverMouse=false;
+//            moverCats=true;
+        }
+        //mover cat
+        if(matrizGame[4][7]==2 && moverCats==true){
+//            moverIzDe=JOptionPane.showOptionDialog(null, "Es necesario que selecciones una opción", "Mover cat", WIDTH, WIDTH, iconoMouse, opciones, opciones[0]);
+//            if (moverIzDe==0) {
+                if (matrizGame[3][6]==0) {
+                    b31.setIcon(iconoRaton1);
+                    b40.setIcon(null);
+                    matrizGame[3][6]=2;
+                    matrizGame[4][7]=0;
+                    falsoCat();
+//                }
+                }else if(moverIzDe==2){
+
                 }
-            } 
-            moverCats=false;
-            moverMouse=true;
         }
     }//GEN-LAST:event_b40ActionPerformed
 
     private void b41ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b41ActionPerformed
         //mover mouse
-        if (moverMouse==true) {
-            if (getIconImage()==null) {
-                if (b34.getIcon()==iconoMouse) {
+        if (moverMouse==true && matrizGame[5][0]==0) {
+//            if (getIconImage()==null) {
+//                if (b34.getIcon()==iconoMouse) {
+            if(matrizGame[4][1]==1){
                     b41.setIcon(iconoMouse);
                     b34.setIcon(null);
-                }
+//                }
+                    matrizGame[4][1]=0;
+                    matrizGame[5][0]=1;
+                    falsoMouse();
             } 
-            if (getIconImage()==null) {
-                if (b50.getIcon()==iconoMouse) {
+//            if (getIconImage()==null) {
+//                if (b50.getIcon()==iconoMouse) {
+            if(matrizGame[6][1]==1){
                     b41.setIcon(iconoMouse);
                     b50.setIcon(null);
-                }
+//                }
+                    matrizGame[6][1]=0;
+                    matrizGame[5][0]=1;
+                    falsoMouse();
             }
-            moverMouse=false;
-            moverCats=true;
-        }//Movimiento cats
-        else if (moverCats==true) {
-            if (getIconImage()==null) {
-                if (b50.getIcon()==iconoRaton1) {
-                    b41.setIcon(iconoRaton1);
-                    b50.setIcon(null);
+//            moverMouse=false;
+//            moverCats=true;
+        }
+        //mover cat
+        if(matrizGame[5][0]==2 && moverCats==true){
+//            moverIzDe=JOptionPane.showOptionDialog(null, "Es necesario que selecciones una opción", "Mover cat", WIDTH, WIDTH, iconoMouse, opciones, opciones[0]);
+//            if (moverIzDe==0) {
+                if (matrizGame[4][1]==0) {
+                    b34.setIcon(iconoRaton1);
+                    b41.setIcon(null);
+                    matrizGame[4][1]=2;
+                    matrizGame[5][0]=0;
+                    falsoCat();
+//                }
+                }else if(moverIzDe==2){
+
                 }
-            } 
-            moverCats=false;
-            moverMouse=true;
         }
     }//GEN-LAST:event_b41ActionPerformed
 
     private void b43ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b43ActionPerformed
         //mover mouse
-        if (moverMouse==true) {
-            if (getIconImage()==null) {
-                if (b34.getIcon()==iconoMouse) {
+        if (moverMouse==true && matrizGame[5][2]==0) {
+//            if (getIconImage()==null) {
+//                if (b34.getIcon()==iconoMouse) {
+            if(matrizGame[4][1]==1){
                     b43.setIcon(iconoMouse);
                     b34.setIcon(null);
-                }
+//                }
+                    matrizGame[4][1]=0;
+                    matrizGame[5][2]=1;
+                    falsoMouse();
             } 
-            if (getIconImage()==null) {
-                if (b36.getIcon()==iconoMouse) {
+//            if (getIconImage()==null) {
+//                if (b36.getIcon()==iconoMouse) {
+            if(matrizGame[4][3]==1){
                     b43.setIcon(iconoMouse);
                     b36.setIcon(null);
-                }
+//                }
+                    matrizGame[4][3]=0;
+                    matrizGame[5][2]=1;
+                    falsoMouse();
             } 
-            if (getIconImage()==null) {
-                if (b50.getIcon()==iconoMouse) {
+//            if (getIconImage()==null) {
+//                if (b50.getIcon()==iconoMouse) {
+            if(matrizGame[6][1]==1){
                     b43.setIcon(iconoMouse);
                     b50.setIcon(null);
-                }
+//                }
+                    matrizGame[6][1]=0;
+                    matrizGame[5][2]=1;
+                    falsoMouse();
             } 
-            if (getIconImage()==null) {
-                if (b52.getIcon()==iconoMouse) {
+//            if (getIconImage()==null) {
+//                if (b52.getIcon()==iconoMouse) {
+            if(matrizGame[6][3]==1){
                     b43.setIcon(iconoMouse);
                     b52.setIcon(null);
-                }
+//                }
+                    matrizGame[6][3]=0;
+                    matrizGame[5][2]=1;
+                    falsoMouse();
             }
-            moverMouse=false;
-            moverCats=true;
-        }//Movimiento cats
-        else if (moverCats==true) {
-            if (getIconImage()==null) {
-                if (b50.getIcon()==iconoRaton1) {
-                    b43.setIcon(iconoRaton1);
-                    b50.setIcon(null);
+//            moverMouse=false;
+//            moverCats=true;
+        }
+        //mover cat
+        if(matrizGame[5][2]==2 && moverCats==true){
+            moverIzDe=JOptionPane.showOptionDialog(null, "Es necesario que selecciones una opción", "Mover cat", WIDTH, WIDTH, iconoRaton1, opciones, opciones[0]);
+            if (moverIzDe==0) {
+                if (matrizGame[4][1]==0) {
+                    b34.setIcon(iconoRaton1);
+                    b43.setIcon(null);
+                    matrizGame[4][1]=2;
+                    matrizGame[5][2]=0;
+                    falsoCat();
                 }
-            } else if (getIconImage()==null) {
-                if (b52.getIcon()==iconoRaton1) {
-                    b43.setIcon(iconoRaton1);
-                    b52.setIcon(null);
+            }else if (moverIzDe==1) {
+                if (matrizGame[4][3]==0) {
+                    b36.setIcon(iconoRaton1);
+                    b43.setIcon(null);
+                    matrizGame[4][3]=2;
+                    matrizGame[5][4]=0;
+                    falsoCat();
                 }
+            }else if(moverIzDe==2){
+                
             }
-            moverCats=false;
-            moverMouse=true;
         }
     }//GEN-LAST:event_b43ActionPerformed
 
     private void b45ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b45ActionPerformed
         //mover mouse
-        if (moverMouse==true) {
-            if (getIconImage()==null) {
-                if (b36.getIcon()==iconoMouse) {
+        if (moverMouse==true && matrizGame[5][4]==0) {
+//            if (getIconImage()==null) {
+//                if (b36.getIcon()==iconoMouse) {
+            if(matrizGame[4][3]==1){
                     b45.setIcon(iconoMouse);
                     b36.setIcon(null);
-                }
+//                }
+                    matrizGame[4][3]=0;
+                    matrizGame[5][4]=1;
+                    falsoMouse();
             } 
-            if (getIconImage()==null) {
-                if (b38.getIcon()==iconoMouse) {
+//            if (getIconImage()==null) {
+//                if (b38.getIcon()==iconoMouse) {
+            if(matrizGame[4][5]==1){
                     b45.setIcon(iconoMouse);
                     b38.setIcon(null);
-                }
+//                }
+                    matrizGame[4][5]=0;
+                    matrizGame[5][4]=1;
+                    falsoMouse();
             } 
-            if (getIconImage()==null) {
-                if (b52.getIcon()==iconoMouse) {
+//            if (getIconImage()==null) {
+//                if (b52.getIcon()==iconoMouse) {
+            if(matrizGame[6][3]==1){
                     b45.setIcon(iconoMouse);
                     b52.setIcon(null);
-                }
+//                }
+                    matrizGame[6][3]=0;
+                    matrizGame[5][4]=1;
+                    falsoMouse();
             } 
-            if (getIconImage()==null) {
-                if (b54.getIcon()==iconoMouse) {
+//            if (getIconImage()==null) {
+//                if (b54.getIcon()==iconoMouse) {
+            if(matrizGame[6][5]==1){
                     b45.setIcon(iconoMouse);
                     b54.setIcon(null);
-                }
+//                }
+                    matrizGame[6][5]=0;
+                    matrizGame[5][4]=1;
+                    falsoMouse();
             }
-            moverMouse=false;
-            moverCats=true;
-        }//Movimiento cats
-        else if (moverCats==true) {
-            if (getIconImage()==null) {
-                if (b52.getIcon()==iconoRaton1) {
-                    b45.setIcon(iconoRaton1);
-                    b52.setIcon(null);
+//            moverMouse=false;
+//            moverCats=true;
+        }
+        //mover cat
+        if(matrizGame[5][4]==2 && moverCats==true){
+            moverIzDe=JOptionPane.showOptionDialog(null, "Es necesario que selecciones una opción", "Mover cat", WIDTH, WIDTH, iconoRaton1, opciones, opciones[0]);
+            if (moverIzDe==0) {
+                if (matrizGame[4][3]==0) {
+                    b36.setIcon(iconoRaton1);
+                    b45.setIcon(null);
+                    matrizGame[4][3]=2;
+                    matrizGame[5][4]=0;
+                    falsoCat();
                 }
-            } else if (getIconImage()==null) {
-                if (b54.getIcon()==iconoRaton1) {
-                    b45.setIcon(iconoRaton1);
-                    b54.setIcon(null);
+            }else if (moverIzDe==1) {
+                if (matrizGame[4][5]==0) {
+                    b38.setIcon(iconoRaton1);
+                    b45.setIcon(null);
+                    matrizGame[4][5]=2;
+                    matrizGame[5][4]=0;
+                    falsoCat();
                 }
+            }else if(moverIzDe==2){
+                
             }
-            moverCats=false;
-            moverMouse=true;
         }
     }//GEN-LAST:event_b45ActionPerformed
 
     private void b47ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b47ActionPerformed
         //mover mouse
-        if (moverMouse==true) {
-            if (getIconImage()==null) {
-                if (b38.getIcon()==iconoMouse) {
+        if (moverMouse==true && matrizGame[5][6]==0) {
+//            if (getIconImage()==null) {
+//                if (b38.getIcon()==iconoMouse) {
+            if(matrizGame[4][5]==1){
                     b47.setIcon(iconoMouse);
                     b38.setIcon(null);
-                }
+//                }
+                    matrizGame[4][5]=0;
+                    matrizGame[5][6]=1;
+                    falsoMouse();
             } 
-            if (getIconImage()==null) {
-                if (b40.getIcon()==iconoMouse) {
+//            if (getIconImage()==null) {
+//                if (b40.getIcon()==iconoMouse) {
+            if(matrizGame[4][7]==1){
                     b47.setIcon(iconoMouse);
                     b40.setIcon(null);
-                }
+//                }
+                    matrizGame[4][7]=0;
+                    matrizGame[5][6]=1;
+                    falsoMouse();
             } 
-            if (getIconImage()==null) {
-                if (b54.getIcon()==iconoMouse) {
+//            if (getIconImage()==null) {
+//                if (b54.getIcon()==iconoMouse) {
+            if(matrizGame[6][5]==1){
                     b47.setIcon(iconoMouse);
                     b54.setIcon(null);
-                }
+//                }
+                    matrizGame[6][5]=0;
+                    matrizGame[5][6]=1;
+                    falsoMouse();
             } 
-            if (getIconImage()==null) {
-                if (b56.getIcon()==iconoMouse) {
+//            if (getIconImage()==null) {
+//                if (b56.getIcon()==iconoMouse) {
+            if(matrizGame[6][7]==1){
                     b47.setIcon(iconoMouse);
                     b56.setIcon(null);
-                }
+//                }
+                    matrizGame[6][7]=0;
+                    matrizGame[5][6]=1;
+                    falsoMouse();
             }
-            moverMouse=false;
-            moverCats=true;
-        }//Movimiento cats
-        else if (moverCats==true) {
-            if (getIconImage()==null) {
-                if (b54.getIcon()==iconoRaton1) {
-                    b47.setIcon(iconoRaton1);
-                    b54.setIcon(null);
+//            moverMouse=false;
+//            moverCats=true;
+        }
+        //mover cat
+        if(matrizGame[5][6]==2 && moverCats==true){
+            moverIzDe=JOptionPane.showOptionDialog(null, "Es necesario que selecciones una opción", "Mover cat", WIDTH, WIDTH, iconoRaton1, opciones, opciones[0]);
+            if (moverIzDe==0) {
+                if (matrizGame[4][5]==0) {
+                    b38.setIcon(iconoRaton1);
+                    b47.setIcon(null);
+                    matrizGame[4][5]=2;
+                    matrizGame[5][6]=0;
+                    falsoCat();
                 }
-            } else if (getIconImage()==null) {
-                if (b56.getIcon()==iconoRaton1) {
-                    b47.setIcon(iconoRaton1);
-                    b56.setIcon(null);
+            }else if (moverIzDe==1) {
+                if (matrizGame[4][7]==0) {
+                    b40.setIcon(iconoRaton1);
+                    b47.setIcon(null);
+                    matrizGame[4][7]=2;
+                    matrizGame[5][6]=0;
+                    falsoCat();
                 }
+            }else if(moverIzDe==2){
+                
             }
-            moverCats=false;
-            moverMouse=true;
         }
     }//GEN-LAST:event_b47ActionPerformed
 
     private void b50ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b50ActionPerformed
         //mover mouse
-        if (moverMouse==true) {
-            if (getIconImage()==null) {
-                if (b41.getIcon()==iconoMouse) {
+        if (moverMouse==true && matrizGame[6][1]==0) {
+//            if (getIconImage()==null) {
+//                if (b41.getIcon()==iconoMouse) {
+            if(matrizGame[5][0]==1){
                     b50.setIcon(iconoMouse);
                     b41.setIcon(null);
-                }
+//                }
+                    matrizGame[5][0]=0;
+                    matrizGame[6][1]=1;
+                    falsoMouse();
             } 
-            if (getIconImage()==null) {
-                if (b43.getIcon()==iconoMouse) {
+//            if (getIconImage()==null) {
+//                if (b43.getIcon()==iconoMouse) {
+            if(matrizGame[5][2]==1){
                     b50.setIcon(iconoMouse);
                     b43.setIcon(null);
-                }
+//                }
+                    matrizGame[5][2]=0;
+                    matrizGame[6][1]=1;
+                    falsoMouse();
             } 
-            if (getIconImage()==null) {
-                if (b57.getIcon()==iconoMouse) {
+//            if (getIconImage()==null) {
+//                if (b57.getIcon()==iconoMouse) {
+            /*if(matrizGame[6][7]==1){
                     b50.setIcon(iconoMouse);
                     b57.setIcon(null);
-                }
+//                }
+                    matrizGame[6][7]=0;
+                    matrizGame[5][6]=1;
+                    falsoMouse();
             } 
-            if (getIconImage()==null) {
-                if (b59.getIcon()==iconoMouse) {
+//            if (getIconImage()==null) {
+//                if (b59.getIcon()==iconoMouse) {
+            if(matrizGame[6][7]==1){
                     b50.setIcon(iconoMouse);
                     b59.setIcon(null);
-                }
+//                }
+                    matrizGame[6][7]=0;
+                    matrizGame[5][6]=1;
+                    falsoMouse();
             }
-            moverMouse=false;
-            moverCats=true;
+//            moverMouse=false;
+//            moverCats=true;*/
         }
-        //Movimiento cats
-        else if (moverCats==true) {
-            if (getIconImage()==null) {
-                if (b57.getIcon()==iconoRaton1) {
-                    b50.setIcon(iconoRaton1);
-                    b57.setIcon(null);
+        //mover cat
+        if(matrizGame[6][1]==2 && moverCats==true){
+            moverIzDe=JOptionPane.showOptionDialog(null, "Es necesario que selecciones una opción", "Mover cat", WIDTH, WIDTH, iconoRaton1, opciones, opciones[0]);
+            if (moverIzDe==0) {
+                if (matrizGame[5][0]==0) {
+                    b41.setIcon(iconoRaton1);
+                    b50.setIcon(null);
+                    matrizGame[5][0]=2;
+                    matrizGame[6][1]=0;
+                    falsoCat();
                 }
-            } else if (getIconImage()==null) {
-                if (b59.getIcon()==iconoRaton1) {
-                    b50.setIcon(iconoRaton1);
-                    b59.setIcon(null);
+            }else if (moverIzDe==1) {
+                if (matrizGame[5][2]==0) {
+                    b43.setIcon(iconoRaton1);
+                    b50.setIcon(null);
+                    matrizGame[5][2]=2;
+                    matrizGame[6][1]=0;
+                    falsoCat();
                 }
+            }else if(moverIzDe==2){
+                
             }
-            moverCats=false;
-            moverMouse=true;
         }
     }//GEN-LAST:event_b50ActionPerformed
 
     private void b52ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b52ActionPerformed
         //mover mouse
-        if (moverMouse==true) {
-            if (getIconImage()==null) {
-                if (b43.getIcon()==iconoMouse) {
+        if (moverMouse==true && matrizGame[6][3]==0) {
+//            if (getIconImage()==null) {
+//                if (b43.getIcon()==iconoMouse) {
+            if(matrizGame[5][2]==1){
                     b52.setIcon(iconoMouse);
                     b43.setIcon(null);
-                }
+//                }
+                    matrizGame[5][2]=0;
+                    matrizGame[6][3]=1;
+                    falsoMouse();
             } 
-            if (getIconImage()==null) {
-                if (b45.getIcon()==iconoMouse) {
+//            if (getIconImage()==null) {
+//                if (b45.getIcon()==iconoMouse) {
+            if(matrizGame[5][4]==1){
                     b52.setIcon(iconoMouse);
                     b45.setIcon(null);
-                }
+//                }
+                    matrizGame[5][4]=0;
+                    matrizGame[6][3]=1;
+                    falsoMouse();
             } 
-            if (getIconImage()==null) {
+            /*if (getIconImage()==null) {
                 if (b59.getIcon()==iconoMouse) {
                     b52.setIcon(iconoMouse);
                     b59.setIcon(null);
@@ -1627,42 +2105,58 @@ public class INICIO extends javax.swing.JFrame {
                 }
             }
             moverMouse=false;
-            moverCats=true;
+            moverCats=true;*/
         }
-        //Movimiento cats
-        else if (moverCats==true) {
-            if (getIconImage()==null) {
-                if (b59.getIcon()==iconoRaton1) {
-                    b52.setIcon(iconoRaton1);
-                    b59.setIcon(null);
+        //mover cat
+        if(matrizGame[6][3]==2 && moverCats==true){
+            moverIzDe=JOptionPane.showOptionDialog(null, "Es necesario que selecciones una opción", "Mover cat", WIDTH, WIDTH, iconoRaton1, opciones, opciones[0]);
+            if (moverIzDe==0) {
+                if (matrizGame[5][2]==0) {
+                    b43.setIcon(iconoRaton1);
+                    b52.setIcon(null);
+                    matrizGame[5][2]=2;
+                    matrizGame[6][3]=0;
+                    falsoCat();
                 }
-            } else if (getIconImage()==null) {
-                if (b61.getIcon()==iconoRaton1) {
-                    b52.setIcon(iconoRaton1);
-                    b61.setIcon(null);
+            }else if (moverIzDe==1) {
+                if (matrizGame[5][4]==0) {
+                    b45.setIcon(iconoRaton1);
+                    b52.setIcon(null);
+                    matrizGame[5][4]=2;
+                    matrizGame[6][3]=0;
+                    falsoCat();
                 }
+            }else if(moverIzDe==2){
+                
             }
-            moverCats=false;
-            moverMouse=true;
         }
     }//GEN-LAST:event_b52ActionPerformed
 
     private void b54ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b54ActionPerformed
         //mover mouse
-        if (moverMouse==true) {
-            if (getIconImage()==null) {
-                if (b45.getIcon()==iconoMouse) {
+        if (moverMouse==true && matrizGame[6][5]==0) {
+//            if (getIconImage()==null) {
+//                if (b45.getIcon()==iconoMouse) {
+            if(matrizGame[5][4]==1){
                     b54.setIcon(iconoMouse);
                     b45.setIcon(null);
-                }
+//                }
+                    matrizGame[5][4]=0;
+                    matrizGame[6][5]=1;
+                    falsoMouse();
+
             } 
-            if (getIconImage()==null) {
-                if (b47.getIcon()==iconoMouse) {
+//            if (getIconImage()==null) {
+//                if (b47.getIcon()==iconoMouse) {
+            if(matrizGame[5][6]==1){
                     b54.setIcon(iconoMouse);
                     b47.setIcon(null);
-                }
+//                }
+                    matrizGame[5][6]=0;
+                    matrizGame[6][5]=1;
+                    falsoMouse();
             } 
-            if (getIconImage()==null) {
+            /*if (getIconImage()==null) {
                 if (b61.getIcon()==iconoMouse) {
                     b54.setIcon(iconoMouse);
                     b61.setIcon(null);
@@ -1675,135 +2169,277 @@ public class INICIO extends javax.swing.JFrame {
                 }
             }
             moverMouse=false;
-            moverCats=true;
+            moverCats=true;*/
         }
-        //Movimiento cats
-        if (moverCats==true) {
-            if (getIconImage()==null) {
-                if (b61.getIcon()==iconoRaton1) {
-                    b54.setIcon(iconoRaton1);
-                    b61.setIcon(null);
+        //mover cat
+        if(matrizGame[6][5]==2 && moverCats==true){
+            moverIzDe=JOptionPane.showOptionDialog(null, "Es necesario que selecciones una opción", "Mover cat", WIDTH, WIDTH, iconoRaton1, opciones, opciones[0]);
+            if (moverIzDe==0) {
+                if (matrizGame[5][4]==0) {
+                    b45.setIcon(iconoRaton1);
+                    b54.setIcon(null);
+                    matrizGame[5][4]=2;
+                    matrizGame[6][5]=0;
+                    falsoCat();
                 }
-            } else if (getIconImage()==null) {
-                if (b63.getIcon()==iconoRaton1) {
-                    b54.setIcon(iconoRaton1);
-                    b63.setIcon(null);
+            }else if (moverIzDe==1) {
+                if (matrizGame[5][6]==0) {
+                    b47.setIcon(iconoRaton1);
+                    b54.setIcon(null);
+                    matrizGame[5][6]=2;
+                    matrizGame[6][5]=0;
+                    falsoCat();
                 }
+            }else if(moverIzDe==2){
+                
             }
-            moverCats=false;
-            moverMouse=true;
         }
     }//GEN-LAST:event_b54ActionPerformed
 
     private void b56ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b56ActionPerformed
-        if(moverMouse==true && this.getIconImage()!=iconoRaton1.getImage()){
-            if (this.getIconImage()==null) {
-                if (b47.getIcon()==iconoMouse) {
+        if(moverMouse==true && matrizGame[6][7]==0){
+//            if (this.getIconImage()==null) {
+//                if (b47.getIcon()==iconoMouse) {
+            if(matrizGame[5][6]==1){
                     b56.setIcon(iconoMouse);
                     b47.setIcon(null);
-                }
+//                }
+                    matrizGame[5][6]=0;
+                    matrizGame[6][7]=1;
+                    falsoMouse();
             } 
-            if (this.getIconImage()==null) {
-                if (b63.getIcon()==iconoMouse) {
+//            if (this.getIconImage()==null) {
+//                if (b63.getIcon()==iconoMouse) {
+            /*if(matrizGame[5][6]==1){
                     b56.setIcon(iconoMouse);
                     b63.setIcon(null);
-                }
+//                }
             }
         
             moverMouse=false;
-            moverCats=true;
+            moverCats=true;*/
         } 
         //Movimiento cats
-        else if (moverCats==true) {
-            if (this.getIconImage()==null) {
-                if (b63.getIcon()==iconoRaton1) {
+        else if (moverCats==true && matrizGame[6][7]==0) {
+//            if (this.getIconImage()==null) {
+//                if (b63.getIcon()==iconoRaton1) {
+            if(matrizGame[7][6]==2){
                     b56.setIcon(iconoRaton1);
                     b63.setIcon(null);
-                }
+//                }
+                    matrizGame[7][6]=0;
+                    matrizGame[6][7]=2;
+                    falsoCat();
             }
-            moverCats=false;
-            moverMouse=true;
+//            moverCats=false;
+//            moverMouse=true;
+        }
+        if(matrizGame[6][7]==2 && moverCats==true){
+//            moverIzDe=JOptionPane.showOptionDialog(null, "Es necesario que selecciones una opción", "Mover cat", WIDTH, WIDTH, iconoMouse, opciones, opciones[0]);
+//            if (moverIzDe==0) {
+                if (matrizGame[5][6]==0) {
+                    b47.setIcon(iconoRaton1);
+                    b56.setIcon(null);
+                    matrizGame[5][6]=2;
+                    matrizGame[6][7]=0;
+                    falsoCat();
+//                }
+                }else if(moverIzDe==2){
+
+                }
         }
     }//GEN-LAST:event_b56ActionPerformed
 
     private void b57ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b57ActionPerformed
         //mover mouse
-        if (moverMouse==true) {    
-            if (getIconImage()==null) {
-                if (b50.getIcon()==iconoMouse) {
+        if (moverMouse==true && matrizGame[7][0]==0) {    
+//            if (getIconImage()==null) {
+//                if (b50.getIcon()==iconoMouse) {
+            if(matrizGame[6][1]==1){
                     b57.setIcon(iconoMouse);
                     b50.setIcon(null);
                     System.out.println("Ganaste Mouse");
-                }
+//                }
+                    matrizGame[6][1]=0;
+                    matrizGame[7][0]=1;
+                    falsoMouse();
             }
-            moverMouse=false;
-            moverCats=true;
+//            moverMouse=false;
+//            moverCats=true;
+        }
+        //mover cat
+        if(matrizGame[7][0]==2 && moverCats==true){
+//            moverIzDe=JOptionPane.showOptionDialog(null, "Es necesario que selecciones una opción", "Mover cat", WIDTH, WIDTH, iconoMouse, opciones, opciones[0]);
+//            if (moverIzDe==0) {
+                if (matrizGame[6][1]==0) {
+                    b50.setIcon(iconoRaton1);
+                    b57.setIcon(null);
+                    matrizGame[6][1]=2;
+                    matrizGame[7][0]=0;
+                    falsoCat();
+//                }
+                }else if(moverIzDe==2){
+
+                }
         }
     }//GEN-LAST:event_b57ActionPerformed
 
     private void b59ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b59ActionPerformed
         //mover mouse
-        if (moverMouse==true) {
-            if (getIconImage()==null) {
-                if (b50.getIcon()==iconoMouse) {
+        if (moverMouse==true && matrizGame[7][2]==0) {
+//            if (getIconImage()==null) {
+//                if (b50.getIcon()==iconoMouse) {
+            if(matrizGame[6][1]==1){
                     b59.setIcon(iconoMouse);
                     b50.setIcon(null);
                     System.out.println("Ganaste Mouse");
-                }
+//                }
+                    matrizGame[6][1]=0;
+                    matrizGame[7][2]=1;
+                    falsoMouse();
             } 
-            if (getIconImage()==null) {
-                if (b52.getIcon()==iconoMouse) {
+//            if (getIconImage()==null) {
+//                if (b52.getIcon()==iconoMouse) {
+            if(matrizGame[6][3]==1){
                     b59.setIcon(iconoMouse);
                     b52.setIcon(null);
                     System.out.println("Ganaste Mouse");
-                }
+//                }
+                    matrizGame[6][3]=0;
+                    matrizGame[7][2]=1;
+                    falsoMouse();
             }
-            moverMouse=false;
-            moverCats=true;
+//            moverMouse=false;
+//            moverCats=true;
+        }
+        //mover cat
+        if(matrizGame[7][2]==2 && moverCats==true){
+            moverIzDe=JOptionPane.showOptionDialog(null, "Es necesario que selecciones una opción", "Mover cat", WIDTH, WIDTH, iconoRaton1, opciones, opciones[0]);
+            if (moverIzDe==0) {
+                if (matrizGame[6][1]==0) {
+                    b50.setIcon(iconoRaton1);
+                    b59.setIcon(null);
+                    matrizGame[6][1]=2;
+                    matrizGame[7][2]=0;
+                    falsoCat();
+                }
+            }else if (moverIzDe==1) {
+                if (matrizGame[6][3]==0) {
+                    b52.setIcon(iconoRaton1);
+                    b59.setIcon(null);
+                    matrizGame[6][3]=2;
+                    matrizGame[7][2]=0;
+                    falsoCat();
+                }
+            }else if(moverIzDe==2){
+                
+            }
         }
     }//GEN-LAST:event_b59ActionPerformed
 
     private void b61ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b61ActionPerformed
         //mover mouse
-        if (moverMouse==true) {
-            if (getIconImage()==null) {
-                if (b52.getIcon()==iconoMouse) {
+        if (moverMouse==true && matrizGame[7][4]==0) {
+//            if (getIconImage()==null) {
+//                if (b52.getIcon()==iconoMouse) {
+            if(matrizGame[6][3]==1){
                     b61.setIcon(iconoMouse);
                     b52.setIcon(null);
                     System.out.println("Ganaste Mouse");
-                }
+//                }
+                    matrizGame[6][3]=0;
+                    matrizGame[7][4]=1;
+                    falsoMouse();
             } 
-            if (getIconImage()==null) {
-                if (b54.getIcon()==iconoMouse) {
+//            if (getIconImage()==null) {
+//                if (b54.getIcon()==iconoMouse) {
+            if(matrizGame[6][5]==1){
                     b61.setIcon(iconoMouse);
                     b54.setIcon(null);
                     System.out.println("Ganaste Mouse");
-                }
+//                }
+                    matrizGame[6][5]=0;
+                    matrizGame[7][4]=1;
+                    falsoMouse();
             }
-            moverMouse=false;
-            moverCats=true;
+//            moverMouse=false;
+//            moverCats=true;
+        }
+        //mover cat
+        if(matrizGame[7][4]==2 && moverCats==true){
+            moverIzDe=JOptionPane.showOptionDialog(null, "Es necesario que selecciones una opción", "Mover cat", WIDTH, WIDTH, iconoRaton1, opciones, opciones[0]);
+            if (moverIzDe==0) {
+                if (matrizGame[6][3]==0) {
+                    b52.setIcon(iconoRaton1);
+                    b61.setIcon(null);
+                    matrizGame[6][5]=2;
+                    matrizGame[7][4]=0;
+                    falsoCat();
+                }
+            }else if (moverIzDe==1) {
+                if (matrizGame[6][5]==0) {
+                    b54.setIcon(iconoRaton1);
+                    b61.setIcon(null);
+                    matrizGame[6][5]=2;
+                    matrizGame[7][4]=0;
+                    falsoCat();
+                }
+            }else if(moverIzDe==2){
+                
+            }
         }
     }//GEN-LAST:event_b61ActionPerformed
 
     private void b63ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b63ActionPerformed
         //mover mouse
-        if (moverMouse==true) {
-            if (getIconImage()==null) {
-                if (b54.getIcon()==iconoMouse) {
+        if (moverMouse==true && matrizGame[7][6]==0) {
+//            if (getIconImage()==null) {
+//                if (b54.getIcon()==iconoMouse) {
+            if(matrizGame[6][5]==1){
                     b63.setIcon(iconoMouse);
                     b54.setIcon(null);
                     System.out.println("Ganaste Mouse");
-                }
+//                }
+                    matrizGame[6][5]=0;
+                    matrizGame[7][6]=1;
+                    falsoMouse();
             } 
-            if (getIconImage()==null) {
-                if (b56.getIcon()==iconoMouse) {
+//            if (getIconImage()==null) {
+//                if (b56.getIcon()==iconoMouse) {
+            if(matrizGame[6][7]==1){
                     b63.setIcon(iconoMouse);
                     b56.setIcon(null);
                     System.out.println("Ganaste Mouse");
-                }
+//                }
+                    matrizGame[6][7]=0;
+                    matrizGame[7][6]=1;
+                    falsoMouse();
             }
-            moverMouse=false;
-            moverCats=true;
+//            moverMouse=false;
+//            moverCats=true;
+        }
+        //mover cat
+        if(matrizGame[7][6]==2 && moverCats==true){
+            moverIzDe=JOptionPane.showOptionDialog(null, "Es necesario que selecciones una opción", "Mover cat", WIDTH, WIDTH, iconoRaton1, opciones, opciones[0]);
+            if (moverIzDe==0) {
+                if (matrizGame[6][5]==0) {
+                    b54.setIcon(iconoRaton1);
+                    b63.setIcon(null);
+                    matrizGame[6][5]=2;
+                    matrizGame[7][6]=0;
+                    falsoCat();
+                }
+            }else if (moverIzDe==1) {
+                if (matrizGame[6][7]==0) {
+                    b56.setIcon(iconoRaton1);
+                    b63.setIcon(null);
+                    matrizGame[6][7]=2;
+                    matrizGame[7][6]=0;
+                    falsoCat();
+                }
+            }else if(moverIzDe==2){
+                
+            }
         }
     }//GEN-LAST:event_b63ActionPerformed
 
